@@ -4,8 +4,6 @@
 }
 
 canvas{
-    width: 480px;
-    height: 320px;
     background-color: #eee;
     display: block;
     margin: 0 auto;
