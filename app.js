@@ -23,13 +23,14 @@ canvasContext.stroke(); */
 let x = canvas.width / 2;
 let y = canvas.height - 30;
 
-const dx = +1;
-const dy = -2;
+let dx = +1;
+let dy = -2;
+const ballRadius = 10;
 
 function drawBall() {
 /* draw ball */
     canvasContext.beginPath();
-    canvasContext.arc(x, y, 10, 0, Math.PI * 2);
+    canvasContext.arc(x, y, ballRadius, 0, Math.PI * 2);
     canvasContext.fillStyle = "#0095DD";
     canvasContext.fill();
     canvasContext.closePath();
@@ -44,6 +45,14 @@ function draw() {
     drawBall();
     x += dx;
     y += dy;
+/* bounce the ball on the right side and the left side */
+    
+    if (x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if (y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+        dy = -dy;
+    }
 }
 
 // window.requestAnimationFrame(draw,10);
