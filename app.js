@@ -33,7 +33,27 @@ let paddleHeight = 10;
 let paddleWidth = 75;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
+/* set brick variables */
 
+let brickRowCount = 5;
+let brickColumnCount = 5;
+let brickWidth = 75;
+let brickHeight = 20;
+let brickPadding = 10;
+let brickOffsetTop = 30;
+let brickOffsetLeft = 30;
+
+
+let bricks = [];
+for (let c = 0; c< brickColumnCount; c++) { 
+    bricks[c] = [];
+    for (let r = 0; r < brickRowCount; r++){
+        bricks[c][r] = { x: 0, y: 0 ,status:1};
+        
+    }
+}
+
+console.log(bricks);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -54,6 +74,21 @@ function keyUpHandler(e) {
     }
 }
 
+function collisionDetection() {
+    for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+            let b = bricks[c][r];
+            if (b.status == 1) {
+                if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
+        }
+    }
+}
+
+
 function drawBall() {
     /* draw ball */
     canvasContext.beginPath();
@@ -73,14 +108,34 @@ function drawPaddle() {
     canvasContext.closePath();
 }
 
+function drawBricks() {
+    for (let c = 0; c < brickColumnCount; c++) { 
+        for (let r = 0; r < brickRowCount; r++) {
+            if (bricks[c][r].status == 1) {
+                let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                canvasContext.beginPath();
+                canvasContext.rect(brickX, brickY, brickWidth, brickHeight);
+                canvasContext.fillStyle = "#0095DD";
+                canvasContext.fill();
+                canvasContext.closePath();
+            }
+        }
+    }
+}
+
+
 function draw() {
 /* drawing code */
     
 /* clearing the canvas width drawing and clearing the width */
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
+    drawBricks();
     drawBall();
     drawPaddle();
+    collisionDetection();
     /* bounce the ball on the right side and the left side */
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
