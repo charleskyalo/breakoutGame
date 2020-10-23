@@ -21,8 +21,8 @@ let x = canvas.width / 2;
 let y = canvas.height - 30;
 
 /* change in X-axis  and   Y-axis*/
-let dx = +1;
-let dy = -2;
+let dx = +2.5;
+let dy = -3.5;
 const ballRadius = 10;
 
 let rightPressed = false;
@@ -57,7 +57,7 @@ for (let c = 0; c < brickColumnCount; c++) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 /* mouse Event */
-document.addEventListener("mousemove", mouseMoveHandler, false);
+// document.addEventListener("mousemove", mouseMoveHandler, false);
 
 
 function keyDownHandler(e) {
@@ -79,13 +79,13 @@ function keyUpHandler(e) {
 }
 
 
-function mouseMoveHandler(e) {
-    let relativeX = e.clientX - canvas.offsetLeft;
-    if (relativeX > 0 && relativeX < canvas.width) {
-        paddleX = relativeX - paddleWidth / 2;
-    }
+// function mouseMoveHandler(e) {
+//     let relativeX = e.clientX - canvas.offsetLeft;
+//     if (relativeX > 0 && relativeX < canvas.width) {
+//         paddleX = relativeX - paddleWidth / 2;
+//     }
 
-}
+// }
 function collisionDetection() {
     for (let c = 0; c < brickColumnCount; c++) {
         for (let r = 0; r < brickRowCount; r++) {
